@@ -1,7 +1,7 @@
 from datetime import datetime
 import pandas as pd
 
-from engenharia.etl.tipos import Produto, List, Tabela, Linhas
+from tipos import Produto, List, Tabela, Linhas
 
 ID_DEPÓSITO_ECOMMERCE = '12267858145'
 ID_DEPÓSITO_HOUZE = '14886481310'

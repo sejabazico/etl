@@ -1,3 +1,3 @@
-import engenharia.etl.transformadores.pedido_json
-import engenharia.etl.transformadores.estoque_json
-import engenharia.etl.transformadores.extrato_planilha
+import transformadores.pedido_json
+import transformadores.estoque_json
+import transformadores.extrato_planilha

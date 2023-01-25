@@ -1,1 +1,1 @@
-import engenharia.etl.carregadores.google_planilhas
+import carregadores.google_planilhas

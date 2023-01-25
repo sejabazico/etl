@@ -1,2 +1,2 @@
-import engenharia.etl.extratores.bling
-import engenharia.etl.extratores.conta_simples
+import extratores.bling
+import extratores.conta_simples

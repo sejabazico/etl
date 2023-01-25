@@ -1,6 +1,8 @@
-from engenharia.etl import extratores, transformadores, carregadores
+import extratores
+import transformadores
+import carregadores
 
-from engenharia.etl.tipos import IO
+from tipos import IO
 
 
 def reset_de_produtos() -> IO:

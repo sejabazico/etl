@@ -6,7 +6,7 @@ from datetime import datetime
 import pandas as pd
 import pygsheets
 
-from engenharia.etl.tipos import Tabela, IO, Linhas, Tuple
+from tipos import Tabela, IO, Linhas, Tuple
 
 
 RecursoDeInteraçãoComAPI = Resource
@@ -35,7 +35,7 @@ def construtor_de_tabelas(tabela: Tabela,
     ).execute()
 
     print(f'{operação.get("updatedCells")} células atualizadas.')
-          #f'Última atualização: {datetime.now().strftime("%d/%m/%Y %H:%M:%S")}')
+    #f'Última atualização: {datetime.now().strftime("%d/%m/%Y %H:%M:%S")}')
 
 
 def ultima_atualizacao():
@@ -84,3 +84,27 @@ def apagador_de_linhas(planilha: CódigoDeIdentificaçãoDePlanilha,
         spreadsheetId=planilha,
         body=requisições
     ).execute()
+
+
+
+
+chave_tabela = '1IKZapbvzGuEYKyBmCck5CvqzIyDBwg_krLwlW0lkiak'
+nome_da_tabela = 'Relatório de Estoque'
+
+
+def write_to_gsheet(data_df: Tabela, service_file_path: Path, spreadsheet_id: str, sheet_name: str) -> IO:
+    """
+    this function takes data_df and writes it under spreadsheet_id
+    and sheet_name using your credentials under service_file_path
+    """
+    gc = pygsheets.authorize(service_file=service_file_path)
+    sh = gc.open_by_key(spreadsheet_id)
+    try:
+        sh.add_worksheet(sheet_name)
+    except:
+        pass
+    wks_write = sh.worksheet_by_title(sheet_name)
+    wks_write.clear('A1',None,'*')
+    wks_write.set_dataframe(data_df, (1,1), encoding='utf-8', fit=True)
+    wks_write.frozen_rows = 1
+    print("Processo Finalizado!!!")
