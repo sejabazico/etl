@@ -2,7 +2,7 @@ from itertools import count
 
 import requests
 
-from engenharia.etl.tipos import List, Pedido, Produto
+from tipos import List, Pedido, Produto
 
 
 APIKEY = "a3e36e25a52e280465de4b060619486ff2cd0292395bfdac81482c015293b25b250c3104"

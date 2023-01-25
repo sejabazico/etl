@@ -1,6 +1,6 @@
 import pandas as pd
 
-from engenharia.etl.tipos import Linhas
+from tipos import Linhas
 
 
 def transformar_campos(tabela_de_entrada: pd.DataFrame) -> Linhas:

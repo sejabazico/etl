@@ -1,6 +1,7 @@
-from engenharia.etl import extratores, transformadores, carregadores
-
-from engenharia.etl.tipos import IO
+import extratores
+import transformadores
+import carregadores
+from tipos import IO
 
 
 def reset_de_pedidos() -> IO:

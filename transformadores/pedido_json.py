@@ -1,7 +1,7 @@
 from functools import reduce
 from operator import add
 
-from engenharia.etl.tipos import List, Union, Pedido, Linhas, Tabela
+from tipos import List, Union, Pedido, Linhas, Tabela
 
 
 def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
