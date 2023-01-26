@@ -1,6 +1,7 @@
 from itertools import count
 
 import requests
+import json
 
 from tipos import List, Pedido, Produto
 
@@ -22,7 +23,7 @@ def todos_os_pedidos(apikey: str = APIKEY) -> List[Pedido]:
     return pedidos
 
 
-def todos_os_produtos(apikey: str = APIKEY) -> List[Produto]:
+def todos_os_produtos(apikey: str = APIKEY, salvar_json=True) -> List[Produto]:
     produtos = []
     for i in count(1, step=1):
         resposta = requests.get(f"https://bling.com.br/Api/v2/produtos/page={i}/json/",
@@ -33,9 +34,13 @@ def todos_os_produtos(apikey: str = APIKEY) -> List[Produto]:
                 break
         else:
             produtos += resposta['retorno']['produtos']
+    if salvar_json == True:
+        with open('../arquivos/produtos.json', 'w') as arquivo:
+            json.dump(produtos, arquivo)
+        print('Arquivo .json salvo.')
     return produtos
 
 
 if __name__ == '__main__':
-    resultado = todos_os_produtos()
+    resultado = todos_os_pedidos()
     print(resultado[25])
