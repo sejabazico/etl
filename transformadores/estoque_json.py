@@ -41,7 +41,7 @@ def listar_produtos(produtos: List[Produto]) -> Tabela:
                 row.Descrição.split('-')[1].strip() + ' - ' +
                 row.Descrição.split('-')[2].strip()), axis=1)
 
-
+    produtos_df.to_parquet("../arquivos/produtos.parquet")
     return produtos_df
 
 
