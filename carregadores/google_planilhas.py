@@ -13,13 +13,13 @@ RecursoDeInteraçãoComAPI = Resource
 CódigoDeIdentificaçãoDePlanilha = str
 
 
-CAMINHO_PARA_CREDENCIAIS = Path(__file__) / ".." / "credenciais" / "google_sheets_credentials.json"
+CAMINHO_PARA_CREDENCIAIS = Path(__file__).parent / "credenciais" / "google_sheets_credentials.json"
 
 
 def iniciar_serviço_da_api_do_sheets(caminho_para_credenciais: Path = CAMINHO_PARA_CREDENCIAIS
                                      ) -> RecursoDeInteraçãoComAPI:
     escopos = ['https://www.googleapis.com/auth/spreadsheets']
-    credenciais = service_account.Credentials.from_service_account_file(caminho_para_credenciais.resolve(),
+    credenciais = service_account.Credentials.from_service_account_file(caminho_para_credenciais,
                                                                         scopes=escopos)
     return build('sheets', 'v4', credentials=credenciais).spreadsheets()
 

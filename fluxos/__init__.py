@@ -1,1 +1,1 @@
-import fluxos.reset_de_pedidos
+import fluxos.reset_de_estoque
