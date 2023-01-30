@@ -4,6 +4,5 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/datalake-375813/entrypoint_estoque']
 
-logs:
-  options:
-    - CLOUD_LOGGING_ONLY
+options:
+  logging: GCS_ONLY
