@@ -1,1 +1,2 @@
 import carregadores.google_planilhas
+import carregadores.google_cloud_storage
