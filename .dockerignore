@@ -1,0 +1,4 @@
+*.json
+!chave_datalake.json
+!google_sheets_credentials.json
+*.parquet
