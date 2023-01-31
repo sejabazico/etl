@@ -1,13 +1,18 @@
 from datetime import datetime
+from pathlib import Path
+
 import pandas as pd
 
 from tipos import Produto, List, Tabela, Linhas
 
+
 ID_DEPÓSITO_ECOMMERCE = '12267858145'
 ID_DEPÓSITO_HOUZE = '14886481310'
 
+CAMINHO_PARA_ARQUIVOS_DE_CACHE = Path(__file__).parent.parent / "cache"
 
-def listar_produtos(produtos: List[Produto]) -> Tabela:
+
+def listar_produtos(produtos: List[Produto], salvar_parquet=True) -> Tabela:
     dados_do_produto = [{
         'Código': produto['produto']['codigo'],
         'Descrição': str(produto['produto']['descricao']),
@@ -41,7 +46,9 @@ def listar_produtos(produtos: List[Produto]) -> Tabela:
                 row.Descrição.split('-')[1].strip() + ' - ' +
                 row.Descrição.split('-')[2].strip()), axis=1)
 
-    produtos_df.to_parquet("../arquivos/produtos.parquet")
+    if salvar_parquet:
+        produtos_df.to_parquet(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "produtos.parquet")
+
     return produtos_df
 
 
