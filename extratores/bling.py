@@ -1,3 +1,4 @@
+import os
 from itertools import count
 from pathlib import Path
 
@@ -24,6 +25,8 @@ def todos_os_pedidos(apikey: str = APIKEY, salvar_json=True) -> List[Pedido]:
             pedidos += resposta["retorno"]["pedidos"]
 
     if salvar_json:
+        if not CAMINHO_PARA_ARQUIVOS_DE_CACHE.exists():
+            os.mkdir(CAMINHO_PARA_ARQUIVOS_DE_CACHE)
         with open(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "todos_os_pedidos.json", "w") as arquivo:
             json.dump(pedidos, arquivo)
         print('Arquivo todos_os_pedidos.json salvo.')
@@ -44,6 +47,8 @@ def todos_os_produtos(apikey: str = APIKEY, salvar_json=True) -> List[Produto]:
             produtos += resposta['retorno']['produtos']
 
     if salvar_json:
+        if not CAMINHO_PARA_ARQUIVOS_DE_CACHE.exists():
+            os.mkdir(CAMINHO_PARA_ARQUIVOS_DE_CACHE)
         with open(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "produtos.json", "w") as arquivo:
             json.dump(produtos, arquivo)
         print('Arquivo produtos.json salvo.')
