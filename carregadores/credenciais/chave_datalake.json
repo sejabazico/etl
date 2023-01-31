@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "datalake-375813",
+  "private_key_id": "4a601c366afe47c2ec08aaa9874e2ac60a057280",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDHCc7JWlQBy55Q\neWNBuA1U1lHJ7PXFU5hUivmQh5zrEb/UPd8Qs+/GWp2YG67Gk44aJAGzmEw/H1KW\nBiXDiKDPHEVFnrs4KZIwgNg+pK3F4rwqhYGY7uWR++s/7pxKpyxC4nAr+280elry\nccnUfCLBul2CSnwpiTIyKKnVpz6N9zGxNhTsR7Hle7pa7hiXaiu1AxncaxR1AIhj\nyoZqJTSG2NbNsPvNN4M6UdGoVwfHjtuzn/YRYlLUWQfR5FPW8dUKK8P7mV7HkBco\np/m749EdJBx8/Ko6fmAbNy00Q277laMdsfnV2+hjWofRPG70RRKIFLNpEuuGVRsT\n5I4RDxEBAgMBAAECggEAUPW21KU2zYIm88Hkc0trtMn2e8W0lJ6ztBPRfo4C8IUI\nO8ss7Ezcp5idSM1d0q0bXJuvy38T6IsTmy2F99qf2o67yJ1PtwEF00/dZeGzQ24+\nLqeedvgZjj9jyd4DWcRVFyGnEeTUr4pjawGI4LLbqmRle8VTasvBDLEIn/zGz5R4\nJAbLaminQG4wN98fecs/hL0xsz0TZBlnPEUUAzu1eISL2+L0fS8c+GhYo0gFaArI\nJsHaOu3M+0am33c0ZCVezDwdUp/enIJ6sdi/XBGYpsUz5yz7cUxG+ODWCG79dDFc\nDcNPhZq/T57Bo16Q7jJTnXlgchV++cq9Ewfq6+wp5wKBgQD1/DHw6n+xnI8Jyqv1\ntGVB1Y5hrt5zHIk3s+TVjh+To38lhuWSCbdghS5JmDvhIoFVPmsFXWeoqWPZ9BLl\nE3T6ct2Smrmw3kTbP5zCz9L8r6TP7MocLtMdpaAqCbk2igt3b8joPCfbrf0l+6p3\nTPkdd0+U8YIvSCfYS5XRD/qX1wKBgQDPJE39l4A4PhQF/TWWEwsMDRf0+iFv3OXH\nW7T2A7+r1+EJrPJZ1dPTrVBZg7WFsCDg+moFyghobEEMciPtKK4TfVWLLTTFnQh/\nrEKg31Aff32N7ecdcHt5zToGQrnCBgD2CfbT2hwt1hjTlsWxVK/H1fvEcjKbpYGa\nZ7os+bai5wKBgDnDtX6bsszktPpZq7QRXs3s9nid9gMWKmr4Rb6Yl3W2KT+IxBRd\nT8DMxafmpfkifzijZcJmwtbqoFYoaN9+iDPgEYRB7WVJbOYHtCpTX3qTTKK/Ol8P\n5+fIYyo8ClBybmrnx0gyCDIgU5g91zQY0U9IG1ogtK+hxCmY5l+n3vMVAoGBALrp\n1ppLF/8oPSc+WhlGq8Q/GGwNPRjUql8fKIaJ0W3+CemSLsnTgiZTENsFV0oAKVr5\ne6wnpzia3oOdhz+cYp/hi8xfiWv8DEwwo5rIh2M0xpXIo7DT7Ad3obE+iqJCiqF5\nUknOWXke5R4gwdkHQuq+80VLitEaIn2ytbOZzSznAoGBAL+K/qlbT1sjVXAV4Jyq\nz9fa3M09r0kjuluuMmxtiRWqv5pe8TKTJSNTmpdxQyQBPBKOklZVxtYBsENPcB26\nMBaJITu7Ix4zztK4+QZqk/6S1HrHWL2lzLzrYwNGFzI5yC+endKsotA3pkXSPbzV\nbUoYc++eWufOwzzXEh9qXDmL\n-----END PRIVATE KEY-----\n",
+  "client_email": "datalake-bzico@datalake-375813.iam.gserviceaccount.com",
+  "client_id": "116632264448135937930",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/datalake-bzico%40datalake-375813.iam.gserviceaccount.com"
+}

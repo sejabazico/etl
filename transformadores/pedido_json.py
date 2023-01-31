@@ -1,7 +1,14 @@
 from functools import reduce
 from operator import add
+from pathlib import Path
 
 from tipos import List, Union, Pedido, Linhas, Tabela
+
+import fastparquet as fp
+import pandas as pd
+
+
+CAMINHO_PARA_ARQUIVOS_DE_CACHE = Path(__file__).parent.parent / "cache"
 
 
 def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
@@ -47,5 +54,10 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
         return [list(item.values()) for item in itens]
 
 
-def múltiplos(pedidos: List[Pedido], cabeçalho=True) -> Union[Tabela, Linhas]:
-    return reduce(add, [único(pedido, cabeçalho=(i==0 and cabeçalho)) for i, pedido in enumerate(pedidos)])
+def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> Union[Tabela, Linhas]:
+    dados = reduce(add, [único(pedido, cabeçalho=(i == 0 and cabeçalho)) for i, pedido in enumerate(pedidos)])
+
+    if salvar_parquet:
+        fp.write(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "pedidos.parquet", data=pd.DataFrame(dados[1:], columns=dados[0]))
+
+    return dados
