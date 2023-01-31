@@ -58,9 +58,24 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
 def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> Union[Tabela, Linhas]:
     dados = reduce(add, [único(pedido, cabeçalho=(i == 0 and cabeçalho)) for i, pedido in enumerate(pedidos)])
 
-    if salvar_parquet:
+    if salvar_parquet and cabeçalho:
         if not CAMINHO_PARA_ARQUIVOS_DE_CACHE.exists():
             os.mkdir(CAMINHO_PARA_ARQUIVOS_DE_CACHE)
+
+        tabela = pd.DataFrame(dados[1:], columns=dados[0])
+
+        tabela['Preço Unitário'] = pd.to_numeric(tabela['Preço Unitário'], errors='coerce')
+        tabela['Custo Unitário'] = pd.to_numeric(tabela['Custo Unitário'], errors='coerce')
+        tabela['Quantidade'] = pd.to_numeric(tabela['Quantidade'], errors='coerce')
+        tabela['Nº do Pedido'] = pd.to_numeric(tabela['Nº do Pedido'], errors='coerce')
+        tabela['Nº do Pedido na Loja Virtual'] = pd.to_numeric(tabela['Nº do Pedido na Loja Virtual'], errors='coerce')
+        tabela['ID Contato'] = pd.to_numeric(tabela['ID Contato'], errors='coerce')
+        tabela['Desconto do pedido'] = pd.to_numeric(tabela['Desconto do pedido'], errors='coerce')
+        tabela['Frete'] = pd.to_numeric(tabela['Frete'], errors='coerce')
+        tabela['Preço Total do pedido'] = pd.to_numeric(tabela['Preço Total do pedido'], errors='coerce')
+        tabela['Preço Total dos produtos'] = pd.to_numeric(tabela['Preço Total dos produtos'], errors='coerce')
+        tabela['Data'] = pd.to_datetime(tabela['Data'], errors='coerce')
+
         fp.write(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "pedidos.parquet", data=pd.DataFrame(dados[1:], columns=dados[0]))
 
     return dados
