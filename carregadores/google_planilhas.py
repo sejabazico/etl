@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytz
 from google.oauth2 import service_account
 from googleapiclient.discovery import build, Resource
 from datetime import datetime
@@ -14,6 +15,8 @@ CódigoDeIdentificaçãoDePlanilha = str
 
 
 CAMINHO_PARA_CREDENCIAIS = Path(__file__).parent / "credenciais" / "google_sheets_credentials.json"
+
+FUSO_HORÁRIO = pytz.timezone("America/Bahia")
 
 
 def iniciar_serviço_da_api_do_sheets(caminho_para_credenciais: Path = CAMINHO_PARA_CREDENCIAIS
@@ -51,7 +54,7 @@ def ultima_atualizacao():
         wks_write.set_dataframe(data, (1, 1), encoding='utf-8', fit=True)
         wks_write.frozen_rows = 1
 
-    hora = [datetime.now().strftime("%d/%m/%Y %H:%M:%S")]
+    hora = [datetime.now(FUSO_HORÁRIO).strftime("%d/%m/%Y %H:%M:%S")]
     hora_df = pd.DataFrame(data=hora, index=None, columns=None)
     credencials = CAMINHO_PARA_CREDENCIAIS
     spreadsheet_id = "1IKZapbvzGuEYKyBmCck5CvqzIyDBwg_krLwlW0lkiak"
