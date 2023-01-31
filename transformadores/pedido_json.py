@@ -67,15 +67,15 @@ def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> U
         tabela['Preço Unitário'] = pd.to_numeric(tabela['Preço Unitário'], errors='coerce')
         tabela['Custo Unitário'] = pd.to_numeric(tabela['Custo Unitário'], errors='coerce')
         tabela['Quantidade'] = pd.to_numeric(tabela['Quantidade'], errors='coerce')
-        tabela['Nº do Pedido'] = pd.to_numeric(tabela['Nº do Pedido'], errors='coerce')
-        tabela['Nº do Pedido na Loja Virtual'] = pd.to_numeric(tabela['Nº do Pedido na Loja Virtual'], errors='coerce')
-        tabela['ID Contato'] = pd.to_numeric(tabela['ID Contato'], errors='coerce')
+        tabela['N° do Pedido'] = pd.to_numeric(tabela['N° do Pedido'], errors='coerce')
+        tabela['N° do Pedido na Loja Virtual'] = pd.to_numeric(tabela['N° do Pedido na Loja Virtual'], errors='coerce')
+        tabela['ID contato'] = pd.to_numeric(tabela['ID contato'], errors='coerce')
         tabela['Desconto do pedido'] = pd.to_numeric(tabela['Desconto do pedido'], errors='coerce')
         tabela['Frete'] = pd.to_numeric(tabela['Frete'], errors='coerce')
         tabela['Preço Total do pedido'] = pd.to_numeric(tabela['Preço Total do pedido'], errors='coerce')
         tabela['Preço Total dos produtos'] = pd.to_numeric(tabela['Preço Total dos produtos'], errors='coerce')
         tabela['Data'] = pd.to_datetime(tabela['Data'], errors='coerce')
 
-        fp.write(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "pedidos.parquet", data=pd.DataFrame(dados[1:], columns=dados[0]))
+        fp.write(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "pedidos.parquet", data=tabela)
 
     return dados
