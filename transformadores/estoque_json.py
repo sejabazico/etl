@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from pathlib import Path
 
@@ -47,6 +48,8 @@ def listar_produtos(produtos: List[Produto], salvar_parquet=True) -> Tabela:
                 row.Descrição.split('-')[2].strip()), axis=1)
 
     if salvar_parquet:
+        if not CAMINHO_PARA_ARQUIVOS_DE_CACHE.exists():
+            os.mkdir(CAMINHO_PARA_ARQUIVOS_DE_CACHE)
         produtos_df.to_parquet(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "produtos.parquet")
 
     return produtos_df

@@ -1,3 +1,4 @@
+import os
 from functools import reduce
 from operator import add
 from pathlib import Path
@@ -58,6 +59,8 @@ def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> U
     dados = reduce(add, [único(pedido, cabeçalho=(i == 0 and cabeçalho)) for i, pedido in enumerate(pedidos)])
 
     if salvar_parquet:
+        if not CAMINHO_PARA_ARQUIVOS_DE_CACHE.exists():
+            os.mkdir(CAMINHO_PARA_ARQUIVOS_DE_CACHE)
         fp.write(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "pedidos.parquet", data=pd.DataFrame(dados[1:], columns=dados[0]))
 
     return dados
