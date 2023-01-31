@@ -1,8 +1,5 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/datalake-375813/entrypoint_estoque', '.']
+    args: ['build', '-t', 'gcr.io/datalake-375813/etl', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/datalake-375813/entrypoint_estoque']
-
-options:
-  logging: GCS_ONLY
+    args: ['push', 'gcr.io/datalake-375813/etl']
