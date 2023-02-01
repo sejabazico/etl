@@ -74,7 +74,8 @@ def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> U
         tabela['Frete'] = pd.to_numeric(tabela['Frete'], errors='coerce')
         tabela['Preço Total do pedido'] = pd.to_numeric(tabela['Preço Total do pedido'], errors='coerce')
         tabela['Preço Total dos produtos'] = pd.to_numeric(tabela['Preço Total dos produtos'], errors='coerce')
-        tabela['Data'] = pd.to_datetime(tabela['Data'], errors='coerce')
+
+        tabela['Data'] = tabela['Data'].apply(lambda data: data.replace("-", ""))
 
         fp.write(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "pedidos.parquet", data=tabela)
 
