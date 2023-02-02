@@ -12,21 +12,22 @@ ID_PROJETO = 'datalake-375813'
 NOME_BUCKET_LAYER_RAW = 'bzco_layer_raw'
 NOME_BUCKET_LAYER_2 = 'bzco_layer_2'
 CAMINHO_PARA_ARQUIVOS_DE_CACHE = Path(__file__).parent.parent / "cache"
-IDENTITY_TOKEN = ("eyJhbGciOiJSUzI1NiIsImtpZCI6IjI3NDA1MmEyYjY0NDg3NDU3NjRlNzJjMzU5MDk3"
-                  "MWQ5MGNmYjU4NWEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY"
-                  "29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zM" 
-                  "m42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4M"
-                  "DU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlc"
-                  "mNvbnRlbnQuY29tIiwic3ViIjoiMTA3NTc3ODc3NDg0MTMzMTYyMjYwIiwiZW1haWwiO"
-                  "iJkYWRvcy5iYXppY29AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X"
-                  "2hhc2giOiJ4aXZjVFVzTHQtUzVZdFZFZ0d3b2JnIiwiaWF0IjoxNjc1MzYxNzU1LCJle"
-                  "HAiOjE2NzUzNjUzNTUsImp0aSI6ImI1ODAyZDhhOTlkNWNlZTUzNjliZjdhNzBmMDBmN"
-                  "GY3ZGQ1ZDYzMjkifQ.uuUQRiTxLaJYAmf5vbWkDeVC92BlTUlN9BdMsWSGdMYLKXez6p"
-                  "P0_PQA0qz7y0LASJjpIL4zeviKSdYsIvvcbLYTujre_eco45CHUXLnJdfokWRm5N-39c"
-                  "nWMOJ2jmthDfAOg5y9uDhq9R5IKnJpfxOUsw8G8RZLeOwC3If9yAHTeq0fr5zLBoiXp-"
-                  "HwneTemrJoZ_NvJ4okgMyDZBQq9eVcvVyiJaqED9SSfg9h3j4zAawjBLcVGkLB67O6FO"
-                  "65eY6ztytsW-lw8BoTy81DvMD9Jmgt0PQgAn9CFjEPnDNDiweeKuderkm9i8_yE2Jf3A"
-                  "Dw1mnmwvmx4URrWOk80A")
+IDENTITY_TOKEN = ("eyJhbGciOiJSUzI1NiIsImtpZCI6IjI3NDA1MmEyYjY0NDg3NDU3Nj"
+                  "RlNzJjMzU5MDk3MWQ5MGNmYjU4NWEiLCJ0eXAiOiJKV1QifQ.eyJpc"
+                  "3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI"
+                  "zMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsI"
+                  "mF1ZCI6IjMyNTU1OTQwNTU5LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQ"
+                  "uY29tIiwic3ViIjoiMTA3NTc3ODc3NDg0MTMzMTYyMjYwIiwiZW1ha"
+                  "WwiOiJkYWRvcy5iYXppY29AZ21haWwuY29tIiwiZW1haWxfdmVyaWZ"
+                  "pZWQiOnRydWUsImF0X2hhc2giOiJmUzUxVXRyamtPaWdCY2dlelRvQ"
+                  "Ux3IiwiaWF0IjoxNjc1MzY2NzUxLCJleHAiOjE2NzUzNzAzNTF9.tD"
+                  "qrfkO_34Ovms8SGKFF7N1WbK4x7wU_pwV_gbHNZ_aHC-PXE6G3jPF1"
+                  "PkrNOJ20WPxj6nI-xPQJ1tLuTg3A3RXrvuCRgV-UCpX0zqThEgsGzZ"
+                  "QZ43g823wE7hTxMhX28S2Vcni8Tjj2CawHEdoyja8yv64vYIwEfDPb"
+                  "it0B2MO23BSM8dyKE0N2POx99lNlvrXTao9Zbe5Ru2hI5oZSqpX3p0"
+                  "jrk1Q0jaIAFhcRggimXGXS7ejJbLlSJfnuBzfVpVE57tFM8OGdAOjr"
+                  "0PTBvJx2fmkpdjmkiw7GOnxKypVOO8Tj2B49HMlmzGuiklHBV7ppaF"
+                  "8ycio6jBM8rPU4Hw")
 
 
 def gatilho_da_cloud_function():
@@ -38,11 +39,11 @@ def gatilho_da_cloud_function():
     response = requests.post(url, headers=headers, json=data)
 
     if response.status_code == 200:
-        print("Request succeeded with status code: ", response.status_code)
-        print("Response content: ", response.content)
+        print("Request succeeded with status code:", response.status_code)
+        print("Response content:", response.content)
     else:
-        print("Request failed with status code: ", response.status_code)
-        print("Response content: ", response.content)
+        print("Request failed with status code:", response.status_code)
+        print("Response content:", response.content)
 
 
 def reset_de_pedidos() -> IO:
