@@ -572,6 +572,17 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "FEITOS ASSESSORIA CONTABIL FISCAL" in histórico:
+            linha["Processada?"] = "Sim"
+            linha["Unidade de Entrega"] = "FP&A"
+            linha["Centro de Custo"] = "Terceiros"
+            linha["Categoria"] = "Conformidade Fiscal e Contábil"
+            linha["Sub-categoria"] = "Assessoria Contábil"
+            linha["Descrição"] = f"Feitos Assessoria Contábil"
+            linha["Entra no CAC?"] = "Não"
+            linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+            linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+            linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
 
         dataframe_de_saída.append(linha.to_dict())
 

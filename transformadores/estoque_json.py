@@ -70,7 +70,7 @@ def listar_produto(produto: Produto) -> Linhas:
 
 
 if __name__ == '__main__':
-    from engenharia.etl import extratores
+    import extratores
 
     resultado = listar_produtos(extratores.bling.todos_os_produtos())
     print(resultado["SKU"])
