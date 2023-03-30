@@ -30,7 +30,7 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
             "Telefone": celular if ((celular := pedido["pedido"]["cliente"]["celular"]) != ""
                                     and celular is not None)
                                 else pedido["pedido"]["cliente"]["fone"],
-            "Desconto do pedido": pedido["pedido"]["desconto"].replace(",", "."),
+            "Desconto do pedido": pedido["pedido"]["desconto"].replace(".", "").replace(",", "."),
             "Frete": pedido["pedido"]["valorfrete"],
             "Observações": pedido["pedido"]["observacoes"],
             "Vendedor": pedido["pedido"]["vendedor"],

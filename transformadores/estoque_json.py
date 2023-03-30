@@ -32,8 +32,7 @@ def listar_produtos(produtos: List[Produto], salvar_parquet=True) -> Tabela:
     produtos_list = [list(linha.values()) for linha in dados_do_produto]
     produtos_df = pd.DataFrame(produtos_list, columns=dados_do_produto[0].keys())
     produtos_df['SKU'] = produtos_df.apply(
-        lambda row: (("Sim" if len(row.Descrição.split('-')) >= 3 else "Não") if row.Código not in (
-            '555', '1000') else "Não") if row.Código.isnumeric() is True else "Não", axis=1)
+        lambda row: "Sim" if len(row.Descrição.split('-')) >= 3 or row.Código == "77777" else "Não", axis=1)
     produtos_df['Modelo'] = produtos_df.apply(lambda row: row.Descrição.split('-')[0].strip(), axis=1)
     produtos_df['Cor'] = produtos_df.apply(
         lambda row: None if len(row.Descrição.split('-')) == 1 else row.Descrição.split('-')[1].strip(), axis=1)
@@ -70,7 +69,7 @@ def listar_produto(produto: Produto) -> Linhas:
 
 
 if __name__ == '__main__':
-    from engenharia.etl import extratores
+    import extratores
 
     resultado = listar_produtos(extratores.bling.todos_os_produtos())
     print(resultado["SKU"])
