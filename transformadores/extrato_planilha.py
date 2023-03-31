@@ -147,16 +147,15 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Variáveis (DV)"
-        elif (-float(linha["Valor"].replace(",", ".")) < 100
+        elif (-float(linha["Valor"].replace(",", ".")) <= 100
               and ("ROBERT AMAZONAS DE SOUZA FILHO" in histórico
-                   or "JULIO VINICIUS SOUSA OLIVEIRA" in histórico
-                   or "" in histórico)):
+                   or "JULIO VINICIUS SOUSA OLIVEIRA" in histórico)):
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "Bázico Logística"
             linha["Centro de Custo"] = "Logística"
             linha["Categoria"] = "Custos de entrega"
-            linha["Sub-categoria"] = "Salário"
-            linha["Descrição"] = f"Salário de {histórico[17:]}"
+            linha["Sub-categoria"] = "Expedição"
+            linha["Descrição"] = f"Motoboy em Aracaju"
             linha["Entra no CAC?"] = "Não"
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
@@ -312,7 +311,8 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
-        elif "ALEXANDRE TEIXEIRA  CORRETOR DE IMOVEIS" in histórico:
+        elif ("ALEXANDRE TEIXEIRA  CORRETOR DE IMOVEIS" in histórico
+              or "ALEXANDRE CESAR DA SILVA TEIXEIRA" in histórico):
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "Gente & Gestão"
             linha["Centro de Custo"] = "Estrutura física"
@@ -323,7 +323,8 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
-        elif "IUGU INSTITUICAO DE PAGAMENTO S.A" in histórico and linha["Valor"] == "-600":
+        elif (("IUGU INSTITUICAO DE PAGAMENTO S.A" in histórico and linha["Valor"] == "-600")
+               or "PIX Enviado para BONUZ DO BRASIL ASSESSORIA EMPRESARIAL LTDA" in histórico):
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "Diretoria"
             linha["Centro de Custo"] = "Terceiros"
@@ -407,14 +408,14 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "Relacionamento com o Cliente"
             linha["Centro de Custo"] = "Ferramentas"
-            linha["Categoria"] = "Gestçao do Relacionamento com o Cliente"
+            linha["Categoria"] = "Gestão de Relacionamento com o Cliente"
             linha["Sub-categoria"] = "Automação de mensagens"
             linha["Descrição"] = f"SAK"
             linha["Entra no CAC?"] = "Não"
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
-        elif "MINISTERIO DA ECONOMIA" in histórico:
+        elif "MINISTERIO DA ECONOMIA" in histórico or "SIMPLES NACIONAL" in histórico:
             mês_ano = linha["Mês de Competência"]
             mês = mês_ano[3:5]
             ano = mês_ano[6:]
@@ -484,7 +485,7 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
-        elif "CAROLINA ROCHA SOLEDADE" in histórico and linha["Valor"] == "-299":
+        elif "CAROLINA ROCHA SOLEDADE" in histórico and linha["Valor"].startswith("-299"):
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "Ecommerce"
             linha["Centro de Custo"] = "Ferramentas"
@@ -495,7 +496,7 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
-        elif "CAROLINA ROCHA SOLEDADE" in histórico and linha["Valor"] == "-210":
+        elif "CAROLINA ROCHA SOLEDADE" in histórico and linha["Valor"].startswith("-210"):
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "Gente & Gestão"
             linha["Centro de Custo"] = "Pessoas"
@@ -534,7 +535,7 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Centro de Custo"] = "Estrutura física"
             linha["Categoria"] = "Contas"
             linha["Sub-categoria"] = "Conta de internet"
-            linha["Descrição"] = f"Conta da Houze"
+            linha["Descrição"] = f"Conta da Houze Aracaju"
             linha["Entra no CAC?"] = "Não"
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
@@ -579,6 +580,50 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Categoria"] = "Conformidade Fiscal e Contábil"
             linha["Sub-categoria"] = "Assessoria Contábil"
             linha["Descrição"] = f"Feitos Assessoria Contábil"
+            linha["Entra no CAC?"] = "Não"
+            linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+            linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+            linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "Pagamento de Contas para MC AJU SERVICO DE COMUNICACAO" in histórico:
+            linha["Processada?"] = "Sim"
+            linha["Unidade de Entrega"] = "Agência Bázico"
+            linha["Centro de Custo"] = "Marketing"
+            linha["Categoria"] = "Marketing Offline"
+            linha["Sub-categoria"] = "Assessoria Contábil"
+            linha["Descrição"] = f"Feitos Assessoria Contábil"
+            linha["Entra no CAC?"] = "Não"
+            linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+            linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+            linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "BRUNA RAFAELA MATOS DA SILVA" in histórico and -float(linha["Valor"].replace(",", ".")) < 50:
+            linha["Processada?"] = "Não"
+            linha["Unidade de Entrega"] = "Gente & Gestão"
+            linha["Centro de Custo"] = "Estrutura física"
+            linha["Categoria"] = "Manutenção"
+            linha["Sub-categoria"] = "Insumos para escritório"
+            linha["Descrição"] = f"Café / Papel / Outros"
+            linha["Entra no CAC?"] = "Não"
+            linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+            linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+            linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "DL*GOOGLE GOOGLE - SAO PAULO/BR" in histórico:
+            linha["Processada?"] = "Sim"
+            linha["Unidade de Entrega"] = "Gente & Gestão"
+            linha["Centro de Custo"] = "Estrutura virtual"
+            linha["Categoria"] = "Manutenção"
+            linha["Sub-categoria"] = "Google Workspace"
+            linha["Descrição"] = f"Drive"
+            linha["Entra no CAC?"] = "Não"
+            linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+            linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+            linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "SODRE  ASSOCIADOS  EVANDO CESAR SODRE JUNIOR" in histórico:
+            linha["Processada?"] = "Sim"
+            linha["Unidade de Entrega"] = "Agência Bázico"
+            linha["Centro de Custo"] = "Terceiros"
+            linha["Categoria"] = "Manutenção"
+            linha["Sub-categoria"] = "Google Workspace"
+            linha["Descrição"] = f"Drive"
             linha["Entra no CAC?"] = "Não"
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
