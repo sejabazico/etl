@@ -13,14 +13,14 @@ CAMINHO_PARA_ARQUIVOS_DE_CACHE = Path(__file__).parent.parent / "cache"
 
 
 def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
-    dados_do_pedido = {"N° do Pedido": pedido["pedido"]["numero"],
-            "N° do Pedido na Loja Virtual": nPL if (nPL := pedido["pedido"].get("numeroPedidoLoja", None)) is not None
+    dados_do_pedido = {"Número do Pedido": pedido["pedido"]["numero"],
+            "Número do Pedido na Loja Virtual": nPL if (nPL := pedido["pedido"].get("numeroPedidoLoja", None)) is not None
                                                 else pedido["pedido"].get("numeroPedidoLoja", None),
             "Status": pedido["pedido"]["situacao"],
             "Data": pedido["pedido"]["data"],
             "ID contato": pedido["pedido"]["cliente"]["id"],
             "Nome do contato": pedido["pedido"]["cliente"]["nome"],
-            "Cpf/Cnpj": pedido["pedido"]["cliente"]["cnpj"],
+            "Cpf ou Cnpj": pedido["pedido"]["cliente"]["cnpj"],
             "Endereço": pedido["pedido"]["cliente"]["endereco"],
             "Bairro": pedido["pedido"]["cliente"]["bairro"],
             "Município": pedido["pedido"]["cliente"]["cidade"],
@@ -30,11 +30,11 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
             "Telefone": celular if ((celular := pedido["pedido"]["cliente"]["celular"]) != ""
                                     and celular is not None)
                                 else pedido["pedido"]["cliente"]["fone"],
-            "Desconto do pedido": pedido["pedido"]["desconto"].replace(".", "").replace(",", "."),
+            "Desconto do pedido": pedido["pedido"]["desconto"].replace(",", "."),
             "Frete": pedido["pedido"]["valorfrete"],
             "Observações": pedido["pedido"]["observacoes"],
             "Vendedor": pedido["pedido"]["vendedor"],
-            "Nº da NFe": pedido["pedido"]["parcelas"][0]["parcela"]["forma_pagamento"]["codigoFiscal"]
+            "Número da NFe": pedido["pedido"]["parcelas"][0]["parcela"]["forma_pagamento"]["codigoFiscal"]
                          if "parcelas" in pedido["pedido"].keys() else None,
             "Forma de pagamento": pedido["pedido"]["parcelas"][0]["parcela"]["forma_pagamento"]["descricao"]
                                   if "parcelas" in pedido["pedido"].keys() else None,
@@ -67,11 +67,11 @@ def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> U
 
         tabela['Preço Unitário'] = pd.to_numeric(tabela['Preço Unitário'], errors='coerce')
         tabela['Custo Unitário'] = pd.to_numeric(tabela['Custo Unitário'], errors='coerce')
-        tabela['Quantidade'] = pd.to_numeric(tabela['Quantidade'], errors='coerce')
-        tabela['N° do Pedido'] = pd.to_numeric(tabela['N° do Pedido'], errors='coerce')
-        tabela['N° do Pedido na Loja Virtual'] = pd.to_numeric(tabela['N° do Pedido na Loja Virtual'], errors='coerce')
-        tabela['ID contato'] = pd.to_numeric(tabela['ID contato'], errors='coerce')
-        tabela['Desconto do pedido'] = pd.to_numeric(tabela['Desconto do pedido'], errors='coerce')
+        tabela['Quantidade'] = pd.to_numeric(tabela['Quantidade'], errors='coerce', downcast='integer')
+        tabela['Número do Pedido'] = pd.to_numeric(tabela['Número do Pedido'], errors='coerce')
+        tabela['Número do Pedido na Loja Virtual'] = pd.to_numeric(tabela['Número do Pedido na Loja Virtual'], errors='coerce')
+        tabela['ID contato'] = pd.to_numeric(tabela['ID contato'], errors='coerce', downcast='integer')
+        tabela['Desconto do pedido'] = pd.to_numeric(tabela['Desconto do pedido'], errors='coerce', downcast='float')
         tabela['Frete'] = pd.to_numeric(tabela['Frete'], errors='coerce')
         tabela['Preço Total do pedido'] = pd.to_numeric(tabela['Preço Total do pedido'], errors='coerce')
         tabela['Preço Total dos produtos'] = pd.to_numeric(tabela['Preço Total dos produtos'], errors='coerce')
