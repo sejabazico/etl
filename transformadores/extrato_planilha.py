@@ -125,7 +125,7 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
-        elif "ALEXANDRE SANTOS" in histórico:
+        elif "ALEXANDRE SANTOS" in histórico or "RAPHAEL ROBERT MENDONCA LEANDRO" in histórico:
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "Bázico Logística"
             linha["Centro de Custo"] = "Logística"
@@ -474,7 +474,7 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
-        elif "FEITOS ASSESSORIA CONTABIL FISCAL" in histórico:
+        elif "FEITOS ASSESSORIA CONTABIL" in histórico:
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "FP&A"
             linha["Centro de Custo"] = "Terceiros"
