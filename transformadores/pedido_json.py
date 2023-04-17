@@ -21,6 +21,7 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
             "ID contato": pedido["pedido"]["cliente"]["id"],
             "Nome do contato": pedido["pedido"]["cliente"]["nome"],
             "Cpf/Cnpj": pedido["pedido"]["cliente"]["cnpj"],
+            "Número do endereço": pedido["pedido"]["cliente"]["numero"],
             "Endereço": pedido["pedido"]["cliente"]["endereco"],
             "Bairro": pedido["pedido"]["cliente"]["bairro"],
             "Município": pedido["pedido"]["cliente"]["cidade"],
@@ -75,6 +76,7 @@ def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> U
         tabela['Frete'] = pd.to_numeric(tabela['Frete'], errors='coerce')
         tabela['Preço Total do pedido'] = pd.to_numeric(tabela['Preço Total do pedido'], errors='coerce')
         tabela['Preço Total dos produtos'] = pd.to_numeric(tabela['Preço Total dos produtos'], errors='coerce')
+        tabela["Número do endereço"] = pd.to_numeric(tabela["Número do endereço"], errors='coerce')
 
         tabela['Data'] = tabela['Data'].apply(lambda data: data.replace("-", ""))
 
