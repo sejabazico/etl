@@ -22,6 +22,8 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
             "Nome do contato": pedido["pedido"]["cliente"]["nome"],
             "Cpf ou Cnpj": pedido["pedido"]["cliente"]["cnpj"],
             "Endereço": pedido["pedido"]["cliente"]["endereco"],
+            "Número": pedido["pedido"]["cliente"]["numero"],
+            "Complemento": pedido["pedido"]["cliente"]["complemento"],
             "Bairro": pedido["pedido"]["cliente"]["bairro"],
             "Município": pedido["pedido"]["cliente"]["cidade"],
             "Estado": pedido["pedido"]["cliente"]["uf"],
@@ -56,8 +58,7 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
 
 
 def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> Union[Tabela, Linhas]:
-    dados = reduce(add, [único(pedido, cabeçalho=(i == 0 and cabeçalho)) for i, pedido in enumerate(pedidos)
-                         if "itens" in pedido["pedido"].keys()])
+    dados = reduce(add, [único(pedido, cabeçalho=(i == 0 and cabeçalho)) for i, pedido in enumerate(pedidos)])
 
     if salvar_parquet and cabeçalho:
         if not CAMINHO_PARA_ARQUIVOS_DE_CACHE.exists():
