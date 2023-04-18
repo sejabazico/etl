@@ -58,7 +58,8 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
 
 
 def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> Union[Tabela, Linhas]:
-    dados = reduce(add, [único(pedido, cabeçalho=(i == 0 and cabeçalho)) for i, pedido in enumerate(pedidos)])
+    dados = reduce(add, [único(pedido, cabeçalho=(i == 0 and cabeçalho)) for i, pedido in enumerate(pedidos)
+                         if "itens" in pedido["pedido"].keys()])
 
     if salvar_parquet and cabeçalho:
         if not CAMINHO_PARA_ARQUIVOS_DE_CACHE.exists():
