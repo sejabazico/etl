@@ -46,13 +46,8 @@ def gatilho_da_cloud_function(url: str):
 
 
 def reset_de_pedidos() -> IO:
-    carregadores.google_planilhas.construtor_de_tabelas(
-        transformadores.pedido_json.múltiplos(
-            extratores.bling.todos_os_pedidos()),
-        planilha="1ZYMvRXGn2-koFUTyJO2fTqp6eYf1dS91NYZhn_Y8ByY",
-        intervalo="'Base do Bling'!A:AC")
-
-    carregadores.google_planilhas.ultima_atualizacao()
+    transformadores.pedido_json.múltiplos(
+        extratores.bling.todos_os_pedidos())
 
     carregadores.google_cloud_storage.subir_para_o_bucket(
         caminho_do_arquivo=CAMINHO_PARA_ARQUIVOS_DE_CACHE / "todos_os_pedidos.json",
@@ -64,8 +59,9 @@ def reset_de_pedidos() -> IO:
         id_projeto=ID_PROJETO,
         nome_do_bucket=NOME_BUCKET_LAYER_2,
         nome_do_blob="pedidos.parquet")
-    gatilho_da_cloud_function()
+    gatilho_da_cloud_function("https://sobrescrever-tabela-de-pedidos-znz5wp6mbq-uc.a.run.app")
 
 
 if __name__ == '__main__':
-    reset_de_pedidos()
+    #reset_de_pedidos()
+    gatilho_da_cloud_function("https://sobrescrever-tabela-de-pedidos-znz5wp6mbq-uc.a.run.app")
