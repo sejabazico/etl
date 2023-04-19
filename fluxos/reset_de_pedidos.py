@@ -50,7 +50,7 @@ def reset_de_pedidos() -> IO:
         transformadores.pedido_json.múltiplos(
             extratores.bling.todos_os_pedidos()),
         planilha="1ZYMvRXGn2-koFUTyJO2fTqp6eYf1dS91NYZhn_Y8ByY",
-        intervalo="'Base do Bling'!A:AD")
+        intervalo="'Base do Bling'!A:AC")
 
     carregadores.google_planilhas.ultima_atualizacao()
 
