@@ -30,8 +30,7 @@ IDENTITY_TOKEN = ("eyJhbGciOiJSUzI1NiIsImtpZCI6IjI3NDA1MmEyYjY0NDg3NDU3Nj"
                   "8ycio6jBM8rPU4Hw")
 
 
-def gatilho_da_cloud_function():
-    url = "https://sobrescrever-tabela-de-pedidos-znz5wp6mbq-uc.a.run.app"
+def gatilho_da_cloud_function(url: str):
     headers = {"Authorization": f"bearer {IDENTITY_TOKEN}",
                "Content-Type": "application/json"}
     data = {"acionador": "qualquer"}
@@ -51,7 +50,7 @@ def reset_de_pedidos() -> IO:
         transformadores.pedido_json.múltiplos(
             extratores.bling.todos_os_pedidos()),
         planilha="1ZYMvRXGn2-koFUTyJO2fTqp6eYf1dS91NYZhn_Y8ByY",
-        intervalo="'Base do Bling'!A:AA")
+        intervalo="'Base do Bling'!A:AC")
 
     carregadores.google_planilhas.ultima_atualizacao()
 
