@@ -1,10 +1,9 @@
 from pathlib import Path
 
-import requests
-
 import extratores
 import transformadores
 import carregadores
+
 from tipos import IO
 
 
@@ -15,21 +14,6 @@ NOME_BUCKET_LAYER_RAW = 'bzco_layer_raw'
 NOME_BUCKET_LAYER_2 = 'bzco_layer_2'
 CAMINHO_PRODUTOS_JSON = Path(__file__).parent.parent / "cache" / "produtos.json"
 CAMINHO_PRODUTOS_PARQUET = Path(__file__).parent.parent / "cache" / "produtos.parquet"
-
-
-def gatilho_da_cloud_function_atualizadora_da_layer2_produtos():
-    url = "https://sobrescrever-tabela-de-estoque-znz5wp6mbq-uc.a.run.app"
-    headers = {"Content-Type": "application/json"}
-    data = {"acionador": "qualquer"}
-
-    response = requests.post(url, headers=headers, json=data)
-
-    if response.status_code == 200:
-        print("Request succeeded with status code:", response.status_code)
-        print("Response content:", response.content)
-    else:
-        print("Request failed with status code:", response.status_code)
-        print("Response content:", response.content)
 
 
 def reset_de_estoque() -> IO:
@@ -49,7 +33,6 @@ def reset_de_estoque() -> IO:
         id_projeto=ID_PROJETO,
         nome_do_bucket=NOME_BUCKET_LAYER_2,
         nome_do_blob="produtos.parquet")
-    gatilho_da_cloud_function_atualizadora_da_layer2_produtos()
 
 
 if __name__ == '__main__':
