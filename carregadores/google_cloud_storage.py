@@ -13,4 +13,5 @@ def subir_para_o_bucket(caminho_do_arquivo: Path, id_projeto: str, nome_do_bucke
     bucket = cliente_storage.bucket(nome_do_bucket)
     blob = bucket.blob(nome_do_blob)
     blob.upload_from_filename(caminho_do_arquivo)
+    print(f'Arquivo {nome_do_blob} carregado no bucket {nome_do_bucket}.')
 
