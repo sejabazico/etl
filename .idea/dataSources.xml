@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Google BigQuery" uuid="f9bd8e93-d0d6-4678-baf8-794699d78909">
+      <driver-ref>bigquery</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.simba.googlebigquery.jdbc42.Driver</jdbc-driver>
+      <jdbc-url>jdbc:bigquery://https://www.googleapis.com/bigquery/v2:</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="ProjectId" value="datalake-375813" />
+        <property name="OAuthServiceAcctEmail" value="datalake-bzico@datalake-375813.iam.gserviceaccount.com" />
+        <property name="OAuthPvtKeyPath" value="C:\Users\gusta\PycharmProjects\etl\carregadores\credenciais\chave_datalake.json" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
