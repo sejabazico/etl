@@ -1,5 +1,6 @@
 pandas
 pyarrow
+openpyxl
 fastparquet
 google-cloud-storage
 google-api-core
