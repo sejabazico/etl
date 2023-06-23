@@ -33,8 +33,11 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
                                     and celular is not None)
                                 else pedido["pedido"]["cliente"]["fone"],
             "Desconto do pedido": pedido["pedido"]["desconto"].replace(",", "."),
+            "Meio de entrega": pedido["pedido"]["transporte"].get(
+                "transportadora") if "transportadora" in pedido["pedido"]["transporte"] else None,
             "Frete": pedido["pedido"]["valorfrete"],
             "Observações": pedido["pedido"]["observacoes"],
+            "Observações internas": pedido["pedido"]["observacaointerna"],
             "Vendedor": pedido["pedido"]["vendedor"],
             "Número da NFe": pedido["pedido"]["parcelas"][0]["parcela"]["forma_pagamento"]["codigoFiscal"]
                          if "parcelas" in pedido["pedido"].keys() else None,
