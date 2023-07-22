@@ -64,6 +64,7 @@ def todos_os_pedidos() -> list[Pedido]:
                                                "buyers._id",
                                                "buyers.main_email",
                                                "buyers.display_name",
+                                               "buyers.doc_number",
                                                "items.product_id",
                                                "items.sku",
                                                "items.name",
