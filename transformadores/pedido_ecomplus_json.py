@@ -13,7 +13,7 @@ import extratores
 CAMINHO_PARA_ARQUIVOS_DE_CACHE = Path(__file__).parent.parent / "cache"
 
 
-def único_ecomplus(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
+def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
     dados_do_pedido = {"Numero do Pedido Ecomplus": pedido["number"],
                        "Cpf": pedido["buyers"][0]["doc_number"],
                        "Nome": pedido["buyers"][0]["display_name"],
@@ -28,8 +28,8 @@ def único_ecomplus(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
         return [list(dados_do_pedido.values())]
 
 
-def múltiplos_ecomplus(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> Union[Tabela, Linhas]:
-    dados_listados = reduce(add, [único_ecomplus(pedido, cabeçalho=(i == 0 and cabeçalho))
+def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> Union[Tabela, Linhas]:
+    dados_listados = reduce(add, [único(pedido, cabeçalho=(i == 0 and cabeçalho))
                                   for i, pedido in enumerate(pedidos)])
 
     if salvar_parquet and cabeçalho:
@@ -41,4 +41,4 @@ def múltiplos_ecomplus(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=T
 
 
 if __name__ == '__main__':
-    print(múltiplos_ecomplus(extratores.ecomplus.todos_os_pedidos()))
+    print(múltiplos(extratores.ecomplus.todos_os_pedidos()))

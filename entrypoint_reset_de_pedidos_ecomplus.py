@@ -1,0 +1,3 @@
+from fluxos.reset_de_pedidos_ecomplus import reset_de_pedidos_ecomplus
+
+reset_de_pedidos_ecomplus()
