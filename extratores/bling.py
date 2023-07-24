@@ -58,4 +58,3 @@ def todos_os_produtos(apikey: str = APIKEY, salvar_json=True) -> List[Produto]:
 
 if __name__ == '__main__':
     resultado = todos_os_pedidos()
-    print(resultado[25])

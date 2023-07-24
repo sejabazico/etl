@@ -1,2 +1,3 @@
 import extratores.bling
 import extratores.conta_simples
+import extratores.ecomplus
