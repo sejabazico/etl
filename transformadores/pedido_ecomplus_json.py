@@ -42,4 +42,3 @@ def múltiplos_ecomplus(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=T
 
 if __name__ == '__main__':
     print(múltiplos_ecomplus(extratores.ecomplus.todos_os_pedidos()))
-    #print(único_ecomplus(extratores.ecomplus.todos_os_pedidos()[1]))
