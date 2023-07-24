@@ -1,5 +1,7 @@
 import datetime
+import json
 import pickle
+from itertools import count
 from pathlib import Path
 
 import requests
@@ -12,6 +14,7 @@ API_KEY = "a454166eade58d1905a90b250de4ec569144de38617fe7ea17c1dd618b64422e54965
           "d8dbec4ad1027bc26743621a53518152"
 MY_ID = "6435a3834bd2e929c1cb30c8"
 CACHE_ACCESS_TOKEN_DATA = Path(__file__).parent.parent / "cache" / "access_token_data.b"
+CAMINHO_PARA_ARQUIVOS_DE_CACHE = Path(__file__).parent.parent / "cache"
 
 
 def get_access_token():
@@ -40,40 +43,52 @@ def get_access_token():
     return access_token_data["access_token"]
 
 
-def todos_os_pedidos() -> list[Pedido]:
+def todos_os_pedidos(salvar_json=True) -> list[Pedido]:
     access_token = get_access_token()
-    response = requests.get(url="https://api.e-com.plus/v1/orders.json",
-                             headers={"Content-Type	": "application/json",
-                                      "X-Store-ID": ID_LOJA,
-                                      "X-Access-Token": access_token,
-                                      "X-My-ID": MY_ID},
-                            params={"limit": 10000,
-                                    "fields": ",".join(["_id",
-                                               "source_name",
-                                               "channel_id",
-                                               "number",
-                                               "code",
-                                               "status",
-                                               "financial_status.updated_at",
-                                               "financial_status.current",
-                                               "fulfillment_status.updated_at",
-                                               "fulfillment_status.current",
-                                               "amount",
-                                               "payment_method_label",
-                                               "shipping_method_label",
-                                               "buyers._id",
-                                               "buyers.main_email",
-                                               "buyers.display_name",
-                                               "buyers.doc_number",
-                                               "items.product_id",
-                                               "items.sku",
-                                               "items.name",
-                                               "items.quantity",
-                                               "created_at",
-                                               "updated_at",
-                                               "extra_discount"])})
 
-    dados = response.json()["result"]
+    dados = []
+    for i in count(0, step=1000):
+        response = requests.get(url="https://api.e-com.plus/v1/orders.json",
+                                 headers={"Content-Type	": "application/json",
+                                          "X-Store-ID": ID_LOJA,
+                                          "X-Access-Token": access_token,
+                                          "X-My-ID": MY_ID},
+                                params={"limit": 1000,
+                                        "offset": {i},
+                                        "fields": ",".join(["_id",
+                                                   "source_name",
+                                                   "channel_id",
+                                                   "number",
+                                                   "code",
+                                                   "status",
+                                                   "financial_status.updated_at",
+                                                   "financial_status.current",
+                                                   "fulfillment_status.updated_at",
+                                                   "fulfillment_status.current",
+                                                   "amount",
+                                                   "payment_method_label",
+                                                   "shipping_method_label",
+                                                   "buyers._id",
+                                                   "buyers.main_email",
+                                                   "buyers.display_name",
+                                                   "buyers.doc_number",
+                                                   "items.product_id",
+                                                   "items.sku",
+                                                   "items.name",
+                                                   "items.quantity",
+                                                   "created_at",
+                                                   "updated_at",
+                                                   "extra_discount"])}).json()
+
+        if len(response["result"]) == 0:
+            break
+        else:
+            dados += response["result"]
+
+    if salvar_json:
+        with open(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "todos_os_pedidos_ecomplus.json", "w") as arquivo:
+            json.dump(dados, arquivo)
+        print("Arquivo todos_os_pedidos_ecomplus.json salvo!!")
 
     return dados
 
