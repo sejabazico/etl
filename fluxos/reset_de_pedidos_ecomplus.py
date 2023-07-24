@@ -13,7 +13,7 @@ CAMINHO_PARA_ARQUIVOS_DE_CACHE = Path(__file__).parent.parent / "cache"
 
 
 def reset_de_pedidos_ecomplus() -> IO:
-    transformadores.pedido_ecomplus_json.múltiplos_ecomplus(
+    transformadores.pedido_ecomplus_json.múltiplos(
         extratores.ecomplus.todos_os_pedidos())
 
     carregadores.google_cloud_storage.subir_para_o_bucket(
