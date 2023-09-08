@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-PASTA_DOS_RELATÓRIOS = Path(__file__).parent / ".." / "fontes_locais" / "relatórios_da_conta_simples"
+PASTA_DOS_RELATÓRIOS = Path(__file__).parent / "relatórios_da_conta_simples"
 
 
 def ler_relatórios() -> pd.DataFrame:
