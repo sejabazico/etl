@@ -6,7 +6,7 @@ from tipos import Linhas
 def transformar_campos(tabela_de_entrada: pd.DataFrame) -> pd.DataFrame:
     dataframe_de_saída = []
     for i, linha in tabela_de_entrada.iterrows():
-        if pd.isnull(linha["Situação"]):
+        if "Situação" not in linha.index or pd.isnull(linha["Situação"]):
             dataframe_de_saída.append(
                 {"Processada?": "Não",
                  "Registro no histórico da ContaSimples": linha["Histórico"],
@@ -58,6 +58,28 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
             linha["Composição no OPEX ou LB"] = "Despesas Variáveis (DV)"
+        elif "FEELING GOOD" in histórico:
+            linha["Processada?"] = "Sim"
+            linha["Unidade de Entrega"] = "Produtos Exclusivos"
+            linha["Centro de Custo"] = "Produto"
+            linha["Categoria"] = "Estoque"
+            linha["Sub-categoria"] = "Resgatável por Bazicash"
+            linha["Descrição"] = f"Shorts"
+            linha["Entra no CAC?"] = ""
+            linha["Composição no Lucro Líquido"] = ""
+            linha["Composição no EBITDA"] = ""
+            linha["Composição no OPEX ou LB"] = ""
+        elif "RED INDUSTRY" in histórico:
+            linha["Processada?"] = "Não"
+            linha["Unidade de Entrega"] = "Linha Bázicas"
+            linha["Centro de Custo"] = "Produto"
+            linha["Categoria"] = "Estoque"
+            linha["Sub-categoria"] = "Camisas"
+            linha["Descrição"] = f"Mix de Produtos"
+            linha["Entra no CAC?"] = ""
+            linha["Composição no Lucro Líquido"] = ""
+            linha["Composição no EBITDA"] = ""
+            linha["Composição no OPEX ou LB"] = ""
         elif "Recarga TED/DOC de PAGAR.ME PAGAMENTOS S.A." in histórico:
             linha["Processada?"] = "Sim"
             linha["Unidade de Entrega"] = "Ecommerce"
@@ -190,8 +212,44 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
                 linha["Unidade de Entrega"] = "Agência Bázico"
                 linha["Centro de Custo"] = "Pessoas"
                 linha["Categoria"] = "Folha de pagamento"
-                linha["Sub-categoria"] = "Bolsa estágio"
-                linha["Descrição"] = f"Bolsa estágio de {histórico[17:]}"
+                linha["Sub-categoria"] = "Salário"
+                linha["Descrição"] = f"Salário de {histórico[17:]}"
+                linha["Entra no CAC?"] = "Não"
+                linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+                linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+                linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "LAURA BEATRIZ SOUSA DOS SANTOS" in histórico:
+            if -float(linha["Valor"].replace(",", ".")) >= 500:
+                linha["Processada?"] = "Não"
+                linha["Unidade de Entrega"] = "Houze"
+                linha["Centro de Custo"] = "Pessoas"
+                linha["Categoria"] = "Folha de pagamento"
+                linha["Sub-categoria"] = "Salário"
+                linha["Descrição"] = f"Salário de {histórico[17:]}"
+                linha["Entra no CAC?"] = "Não"
+                linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+                linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+                linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "ELLEN BRANDÃO SALES" in histórico:
+            if -float(linha["Valor"].replace(",", ".")) >= 500:
+                linha["Processada?"] = "Não"
+                linha["Unidade de Entrega"] = "Houze"
+                linha["Centro de Custo"] = "Pessoas"
+                linha["Categoria"] = "Folha de pagamento"
+                linha["Sub-categoria"] = "Salário"
+                linha["Descrição"] = f"Salário de {histórico[17:]}"
+                linha["Entra no CAC?"] = "Não"
+                linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+                linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+                linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "LUIS EDUARDO ANDRADE MACIEL" in histórico:
+            if -float(linha["Valor"].replace(",", ".")) >= 500:
+                linha["Processada?"] = "Não"
+                linha["Unidade de Entrega"] = "Houze"
+                linha["Centro de Custo"] = "Pessoas"
+                linha["Categoria"] = "Folha de pagamento"
+                linha["Sub-categoria"] = "Salário"
+                linha["Descrição"] = f"Salário de {histórico[17:]}"
                 linha["Entra no CAC?"] = "Não"
                 linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
                 linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
@@ -613,6 +671,17 @@ def pré_processar(dataframe_transformado: pd.DataFrame) -> pd.DataFrame:
             linha["Categoria"] = "Manutenção"
             linha["Sub-categoria"] = "Google Workspace"
             linha["Descrição"] = f"Drive"
+            linha["Entra no CAC?"] = "Não"
+            linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
+            linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
+            linha["Composição no OPEX ou LB"] = "Despesas Fixas (DF)"
+        elif "EVELYN CAROLINE SANTOS LIMA" in histórico:
+            linha["Processada?"] = "Não"
+            linha["Unidade de Entrega"] = "Gente & Gestão"
+            linha["Centro de Custo"] = "Estrutura física"
+            linha["Categoria"] = "Manutenção"
+            linha["Sub-categoria"] = "Limpeza"
+            linha["Descrição"] = f"Faxina"
             linha["Entra no CAC?"] = "Não"
             linha["Composição no Lucro Líquido"] = "Resultado Operacional (EBITDA)"
             linha["Composição no EBITDA"] = "Despesas Operacionais (OPEX)"
