@@ -14,20 +14,21 @@ def ler_relatórios() -> pd.DataFrame:
     tabelas = []
     for planilha in PASTA_DOS_RELATÓRIOS.iterdir():
         caso = re.findall(r"\[(.+)\]", planilha.name)[0]
+        
+        dados_da_planilha = pd.read_excel(planilha)
+        coluna_1 = dados_da_planilha.iloc[:, 0].tolist()
+        linhas_de_cabeçalho = coluna_1.index("Data") + 1
+
         match caso:
             case "Cartões":
-                tabelas.append((tabela
-                                if "Data" in (tabela := pd.read_excel(planilha, header=7))
-                                else pd.read_excel(planilha, header=8))
+                tabelas.append(pd.read_excel(planilha, header=linhas_de_cabeçalho)
                                .iloc[::-1]
                                .rename(columns={"Nome do estabelecimento": "Histórico",
                                                 "Crédito": "Crédito R$",
                                                 "Débito": "Débito R$"})
                                .assign(**{"Saldo R$": ""}))
             case "Conta":
-                tabelas.append((tabela
-                                if "Data" in (tabela := pd.read_excel(planilha, header=7).iloc[::-1]).columns
-                                else pd.read_excel(planilha, header=8).iloc[::-1]))
+                tabelas.append(pd.read_excel(planilha, header=linhas_de_cabeçalho).iloc[::-1])
             case _:
                 raise Exception(f"Caso {caso} desconhecido")
 
