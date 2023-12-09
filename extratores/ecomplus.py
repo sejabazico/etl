@@ -93,7 +93,7 @@ def todos_os_pedidos(salvar_json=True) -> list[Pedido]:
     return dados
 
 
-def todos_os_clientes() -> list[Pedido]:
+def todos_os_clientes(salvar_json=True) -> list[Pedido]:
     access_token = get_access_token()
 
     clientes = []
@@ -115,6 +115,11 @@ def todos_os_clientes() -> list[Pedido]:
             break
         else:
             clientes += response["result"]
+
+    if salvar_json:
+        with open(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "todos_os_clientes_ecomplus.json", "w") as arquivo:
+            json.dump(clientes, arquivo)
+        print("Arquivo todos_os_clientes_ecomplus.json salvo!!")
 
     return clientes
 
