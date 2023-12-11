@@ -1,1 +1,3 @@
 import fluxos.reset_de_estoque
+import fluxos.reset_de_pedidos_ecomplus
+import fluxos.reset_de_clientes_ecomplus

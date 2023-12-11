@@ -93,5 +93,36 @@ def todos_os_pedidos(salvar_json=True) -> list[Pedido]:
     return dados
 
 
+def todos_os_clientes(salvar_json=True) -> list[Pedido]:
+    access_token = get_access_token()
+
+    clientes = []
+    for i in count(0, step=1000):
+        response = requests.get(url="https://api.e-com.plus/v1/customers.json",
+                                headers={"Content-Type	": "application/json",
+                                         "X-Store-ID": ID_LOJA,
+                                         "X-Access-Token": access_token,
+                                         "X-My-ID": MY_ID},
+                                params={"limit": 1000,
+                                        "offset": {i},
+                                        "fields": ",".join(["_id",
+                                                            "name",
+                                                            "main_email",
+                                                            "doc_number",
+                                                            "loyalty_points_entries"])}).json()
+
+        if len(response["result"]) == 0:
+            break
+        else:
+            clientes += response["result"]
+
+    if salvar_json:
+        with open(CAMINHO_PARA_ARQUIVOS_DE_CACHE / "todos_os_clientes_ecomplus.json", "w") as arquivo:
+            json.dump(clientes, arquivo)
+        print("Arquivo todos_os_clientes_ecomplus.json salvo!!")
+
+    return clientes
+
+
 if __name__ == '__main__':
-    todos_os_pedidos()
+    todos_os_clientes()
