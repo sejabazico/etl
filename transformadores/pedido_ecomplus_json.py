@@ -20,7 +20,9 @@ def único(pedido: Pedido, cabeçalho=True) -> Union[Tabela, Linhas]:
                        "E-mail": pedido["buyers"][0]["main_email"],
                        "Id do Cliente na Ecomplus": pedido["buyers"][0]["_id"],
                        "Data": pedido["created_at"],
-                       "Cupom": pedido.get("extra_discount", {}).get("discount_coupon") or None}
+                       "Cupom": pedido.get("extra_discount", {}).get("discount_coupon") or None,
+                       "Status do Pedido": pedido["status"],
+                       "Status Financeiro do Pedido": pedido.get("financial_status", {}).get("current") or None}
 
     if cabeçalho:
         return [list(dados_do_pedido.keys())] + [list(dados_do_pedido.values())]
@@ -41,4 +43,4 @@ def múltiplos(pedidos: List[Pedido], cabeçalho=True, salvar_parquet=True) -> U
 
 
 if __name__ == '__main__':
-    print(múltiplos(extratores.ecomplus.todos_os_pedidos()))
+    múltiplos(extratores.ecomplus.todos_os_pedidos())
