@@ -1,3 +1,4 @@
 import extratores.bling
 import extratores.conta_simples
 import extratores.ecomplus
+import extratores.google_planilhas
