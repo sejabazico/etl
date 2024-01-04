@@ -1,13 +1,18 @@
+import os
 from pathlib import Path
 import re
+from datetime import datetime
+from json import loads, dumps
 
 import extratores
+from carregadores import ecomplus
 from tipos import Registro, Union, Tabela, Linhas, Cliente
 import pandas as pd
 
 
 CHAVE_DE_SERVICO_SHEETS = Path(__file__).parent.parent / "carregadores" / "credenciais" / \
                            "google_sheets_credentials.json"
+CAMINHO_PARA_LISTA_DE_IDS_DE_ACRESCIMO_ENVIADOS = Path(__file__).parent.parent / "cache" / "ids_de_acrescimo.txt"
 
 
 ID_PLANILHA_DIM_CLIENTE = '1SRsNyFsvbRgTrlOqGC1Pd9G7G15qXgr0AjWbXGOqYZ8'
@@ -82,11 +87,84 @@ def acrescentar_id_ecomplus_na_transacao(dados_clientes:Tabela, dados_transacoes
 
 
 def registros_de_acrescimo(transacoes:pd.DataFrame) -> pd.DataFrame:
-    transacoes_positivas = transacoes.loc[transacoes['tipo'] == 'Acréscimo']
+    transacoes_positivas = transacoes.loc[transacoes['tipo'] == 'Acréscimo'].copy()
+
+    transacoes_positivas.loc[:, 'name'] = 'Bazicash'
+    transacoes_positivas.loc[:, 'program_id'] = 'p0_pontos'
+    transacoes_positivas.loc[:, 'ratio'] = 0.1
+    transacoes_positivas.loc[:, 'earned_points'] = transacoes_positivas['valor']
+    transacoes_positivas.loc[:, 'active_points'] = transacoes_positivas['valor']
+
+    transacoes_positivas = transacoes_positivas[[
+        'id_transacao',
+        'id_ecomplus',
+        'name',
+        'program_id',
+        'earned_points',
+        'active_points',
+        'ratio']]
 
     return transacoes_positivas
 
 
+def lista_de_ids_de_acrescimo_já_enviados(caminho:Path):
+    try:
+        with open(caminho, 'r') as lista:
+            return [id.strip() for id in lista]
+    except FileNotFoundError:
+        return []
+
+
+def acrescentar_novos_ids_de_acrescimo_enviados(caminho, lista_atualizada_de_ids):
+    if not os.path.exists(caminho):
+        # Create the file if it doesn't exist
+        with open(caminho, 'w'):
+            pass
+
+    with open(caminho, 'a') as file:
+        file.write('\n'.join(lista_atualizada_de_ids) + '\n')
+
+
+def lista_de_ids_de_transacoes_positivas_a_enviar(transacoes_de_acrescimo:pd.DataFrame):
+    transacoes_enviadas = []
+    current_time = datetime.now()
+
+    ids_transacoes_de_acrescimo = lista_de_ids_de_acrescimo_já_enviados(CAMINHO_PARA_LISTA_DE_IDS_DE_ACRESCIMO_ENVIADOS)
+
+    novas_transacoes_de_acrescimo = transacoes_de_acrescimo[
+        ~transacoes_de_acrescimo['id_transacao'].isin(ids_transacoes_de_acrescimo)]
+
+    if novas_transacoes_de_acrescimo.empty:
+        print(f'A execução foi encerrada por não ter encontrado novos registros de acréscimos de Bazicashs.')
+
+    if not novas_transacoes_de_acrescimo.empty:
+        print(f'Novas transações foram identificadas.')
+        print(novas_transacoes_de_acrescimo)
+
+        transacoes_enviadas.extend(novas_transacoes_de_acrescimo['id_transacao'].tolist())
+
+        acrescentar_novos_ids_de_acrescimo_enviados(
+            CAMINHO_PARA_LISTA_DE_IDS_DE_ACRESCIMO_ENVIADOS,
+            transacoes_enviadas)
+
+        novas_transacoes_de_acrescimo = novas_transacoes_de_acrescimo.drop(
+            ['id_transacao'], axis=1
+        )
+
+        for i, registro in novas_transacoes_de_acrescimo.iterrows():
+            id_ecomplus_do_registro = registro['id_ecomplus']
+            registro_formatado = registro.drop(
+                ['id_ecomplus'], axis=0
+            )
+            registro_formatado['valid_thru'] = current_time.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
+            print(f'O id do registro atual é {id_ecomplus_do_registro}'
+                  f', e o registro formatado é: \n{registro_formatado}')
+
+            ecomplus.adicionar_pontos_em_id(id_ecomplus_do_registro, registro_formatado)
+
+    transacoes_de_acrescimo = transacoes_de_acrescimo.drop(['id_transacao'], axis=1)
+
+    return transacoes_de_acrescimo
 
 
 if __name__ == '__main__':
@@ -109,4 +187,6 @@ if __name__ == '__main__':
     print(res)'''
 
     res = registros_de_acrescimo(acrescentar_id_ecomplus_na_transacao(dados_clientes, dados_transacoes))
-    print(res)
+    lista = lista_de_ids_de_transacoes_positivas_a_enviar(res)
+    #print(lista)
+    #print(lista.keys())
