@@ -33,12 +33,12 @@ def adicionar_pontos_em_id(id_ecomplus:str, informacoes):
     response = requests.post(
         url=url_cliente,
         headers={
-            "Content-Type	": "application/json",
+            "Content-Type": "application/json",
             "X-Store-ID": "51292",
             "X-Access-Token": token,
             "X-My-ID": "6435a3834bd2e929c1cb30c8"
         },
-        params={
+        json={
             "name": "Bazicash",
             "program_id": "p0_pontos",
             "earned_points": informacoes['earned_points'],
@@ -48,7 +48,9 @@ def adicionar_pontos_em_id(id_ecomplus:str, informacoes):
         }
     )
 
-    if response.status_code == 200 or response.status_code == 204:
+    if response.status_code == 200 or response.status_code == 204 or response.status_code == 201:
         print(f'Pontos acrescentados ao id: {id_ecomplus} com sucesso.')
     else:
         print(f'Erro ao acrescentar pontos ao id: {id_ecomplus}. Status de erro: {response.status_code}')
+
+    return response.status_code

@@ -1,11 +1,10 @@
 import os
 from pathlib import Path
 import re
-from datetime import datetime
-from json import loads, dumps
+from datetime import datetime, timedelta
 
 import extratores
-from carregadores import ecomplus
+from carregadores import ecomplus, google_planilhas
 from tipos import Registro, Union, Tabela, Linhas, Cliente
 import pandas as pd
 
@@ -19,6 +18,7 @@ ID_PLANILHA_DIM_CLIENTE = '1SRsNyFsvbRgTrlOqGC1Pd9G7G15qXgr0AjWbXGOqYZ8'
 NOME_ABA_DIM_CLIENTE = 'dados'
 ID_PLANILHA_REGISTROS_TRANSACOES = '1bOpypFRgh4bA5gewLLb7jF8qANNpu5012NMS1GXl4LE'
 NOME_ABA_REGISTROS_TRANSACOES = 'teste'
+NOME_ABA_ERROS_AO_ENVIAR_PARA_API = 'erros_ao_acrescentar'
 
 
 
@@ -125,9 +125,12 @@ def acrescentar_novos_ids_de_acrescimo_enviados(caminho, lista_atualizada_de_ids
         file.write('\n'.join(lista_atualizada_de_ids) + '\n')
 
 
-def lista_de_ids_de_transacoes_positivas_a_enviar(transacoes_de_acrescimo:pd.DataFrame):
+def lista_de_ids_de_transacoes_positivas_a_enviar(dados_clientes:Tabela, dados_transacoes:Tabela):
+    transacoes_de_acrescimo = registros_de_acrescimo(acrescentar_id_ecomplus_na_transacao(dados_clientes, dados_transacoes))
+
     transacoes_enviadas = []
-    current_time = datetime.now()
+
+    data_de_expiracao = datetime.now() + timedelta(days=365)
 
     ids_transacoes_de_acrescimo = lista_de_ids_de_acrescimo_já_enviados(CAMINHO_PARA_LISTA_DE_IDS_DE_ACRESCIMO_ENVIADOS)
 
@@ -147,16 +150,16 @@ def lista_de_ids_de_transacoes_positivas_a_enviar(transacoes_de_acrescimo:pd.Dat
             CAMINHO_PARA_LISTA_DE_IDS_DE_ACRESCIMO_ENVIADOS,
             transacoes_enviadas)
 
-        novas_transacoes_de_acrescimo = novas_transacoes_de_acrescimo.drop(
-            ['id_transacao'], axis=1
-        )
-
         for i, registro in novas_transacoes_de_acrescimo.iterrows():
+            print(registro.keys())
             id_ecomplus_do_registro = registro['id_ecomplus']
             registro_formatado = registro.drop(
+                ['id_transacao'], axis=0
+            )
+            registro_formatado = registro_formatado.drop(
                 ['id_ecomplus'], axis=0
             )
-            registro_formatado['valid_thru'] = current_time.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
+            registro_formatado['valid_thru'] = data_de_expiracao.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
             print(f'O id do registro atual é {id_ecomplus_do_registro}'
                   f', e o registro formatado é: \n{registro_formatado}')
 
@@ -186,7 +189,6 @@ if __name__ == '__main__':
     '''res = cruzamento_de_cpf_e_id(formatar_cpf('047.591.935-10'), agrupamento_de_clientes(dados_clientes))
     print(res)'''
 
-    res = registros_de_acrescimo(acrescentar_id_ecomplus_na_transacao(dados_clientes, dados_transacoes))
-    lista = lista_de_ids_de_transacoes_positivas_a_enviar(res)
+    lista_de_ids_de_transacoes_positivas_a_enviar(dados_clientes, dados_transacoes)
     #print(lista)
     #print(lista.keys())

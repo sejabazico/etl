@@ -107,7 +107,12 @@ def write_to_gsheet(data_df: Tabela, service_file_path: Path, spreadsheet_id: st
     except:
         pass
     wks_write = sh.worksheet_by_title(sheet_name)
+
+    existing_data_df = wks_write.get_as_df()
+
+    combined_data = pd.concat([existing_data_df, data_df], ignore_index=True)
+
     wks_write.clear('A1',None,'*')
-    wks_write.set_dataframe(data_df, (1,1), encoding='utf-8', fit=True)
+    wks_write.set_dataframe(combined_data, (1,1), encoding='utf-8', fit=True)
     wks_write.frozen_rows = 1
     print("Processo Finalizado!!!")
