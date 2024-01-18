@@ -19,12 +19,17 @@ def listar_produtos(produtos: List[Produto], salvar_parquet=True) -> Tabela:
         'Descrição': str(produto['produto']['descricao']),
         'Situação': produto['produto']['situacao'],
         'Estoque E-commerce': int([deposito['deposito']['saldo'] for deposito in produto['produto']['depositos']
-                    if deposito['deposito']['id'] == ID_DEPÓSITO_ECOMMERCE][0]),
+                    if deposito['deposito']['id'] == ID_DEPÓSITO_ECOMMERCE][0]
+                                  if 'depositos' in produto['produto'] else 0),
         'Estoque Houze': int([deposito['deposito']['saldo'] for deposito in produto['produto']['depositos']
-                               if deposito['deposito']['id'] == ID_DEPÓSITO_HOUZE][0]),
+                               if deposito['deposito']['id'] == ID_DEPÓSITO_HOUZE][0]
+                             if 'depositos' in produto['produto'] else 0),
         'Estoque Total': int([deposito['deposito']['saldo'] for deposito in produto['produto']['depositos']
-                    if deposito['deposito']['id'] == ID_DEPÓSITO_ECOMMERCE][0]) + int([deposito['deposito']['saldo'] for deposito in produto['produto']['depositos']
-                               if deposito['deposito']['id'] == ID_DEPÓSITO_HOUZE][0]),
+                    if deposito['deposito']['id'] == ID_DEPÓSITO_ECOMMERCE][0]
+                             if 'depositos' in produto['produto'] else 0)
+                         + int([deposito['deposito']['saldo'] for deposito in produto['produto']['depositos']
+                               if deposito['deposito']['id'] == ID_DEPÓSITO_HOUZE][0]
+                               if 'depositos' in produto['produto'] else 0),
         'Fornecedor': produto['produto']['nomeFornecedor'],
         'Preço': (produto['produto']['preco']).replace('.',','),
         'NCM': produto['produto']['class_fiscal']
@@ -72,4 +77,4 @@ if __name__ == '__main__':
     import extratores
 
     resultado = listar_produtos(extratores.bling.todos_os_produtos())
-    print(resultado["SKU"])
+    #print(resultado["SKU"])

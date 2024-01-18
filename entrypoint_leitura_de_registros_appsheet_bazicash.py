@@ -1,0 +1,3 @@
+from fluxos.leitura_de_registros_appsheet_bazicash import leitura_de_registros_appsheet_bazicash
+
+leitura_de_registros_appsheet_bazicash()

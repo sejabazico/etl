@@ -1,4 +1,4 @@
-pandas
+pandas==2.1.4
 pyarrow
 openpyxl
 fastparquet
@@ -8,3 +8,4 @@ google-auth-oauthlib
 google-api-python-client
 pygsheets
 requests
+pyperclip
